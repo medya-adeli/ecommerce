@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::get('/userprofile',[DashboardController::class, 'index']);
-Route::controller([DashboardController::class])->group();
+Route::middleware('auth','role:admin');
+Route::controller([DashboardController::class])->group(function(){
+    Route::get('/userprofile','index');
+});
 require __DIR__.'/auth.php';
